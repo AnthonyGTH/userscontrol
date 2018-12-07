@@ -41,8 +41,11 @@
     </div>
 
   </div>
-  <a href="{{url('/home')}}" class="btn btn-primary">Cancelar</a>
-  <button type="submit" class="btn btn-primary">Actualizar</button>
+  <div style="text-align: -webkit-center;">
+    <a href="{{url('/home')}}" class="btn btn-primary">Cancelar</a>
+    <button type="submit" class="btn btn-primary">Actualizar</button>
+  </div>
+
 </form>
 
 

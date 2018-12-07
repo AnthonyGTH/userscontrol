@@ -72,18 +72,17 @@
 
                         </div>
 
-                        <div class="form-group row mb-0">
-                          <div class="col-md-6 offset-md-4">
+                            <div style="text-align: -webkit-center;">
                               <a href="/home" class="btn btn-info">
                                   Regresar
                               </a>
-                          </div>
-                            <div class="col-md-6 offset-md-4">
+
                                 <button type="submit" class="btn btn-primary">
                                     Registrarme
                                 </button>
                             </div>
-                        </div>
+
+
                     </form>
         </div>
     </div>

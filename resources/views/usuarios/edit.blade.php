@@ -12,7 +12,6 @@
   <div class="form-group">
     <label for="exampleInputEmail1">Nombre</label>
     <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Inserta nombre" name="name"  value="{{ $user->name }}">
-    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
   </div>
   <div class="form-group">
     <label for="exampleInputEmail1">Correo</label>
@@ -25,6 +24,22 @@
   <div class="form-group">
     <label for="exampleInputPassword2">Reinserte clave</label>
     <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Re INSERTAR" name="password_confirmation" >
+  </div>
+  <div class="form-group row">
+    <label for="inputState" class="col-md-4 col-form-label text-md-right">Rol</label>
+    <div class="col-md-6">
+      <select id="inputState" class="form-control" name="rol">
+        @if($idRolS=="2")
+          <option value="2" selected>Usuario</option>
+          <option value="1">Administrador</option>
+        @else
+          <option value="1" selected>Administrador</option>
+          <option value="2">Usuario</option>
+        @endif
+
+      </select>
+    </div>
+
   </div>
   <a href="{{url('/home')}}" class="btn btn-primary">Cancelar</a>
   <button type="submit" class="btn btn-primary">Actualizar</button>

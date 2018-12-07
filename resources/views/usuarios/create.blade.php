@@ -5,8 +5,8 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
-              <br>
-                <div class="card-header text-center">Registro</div>
+
+                <div class="card-header text-center">Crear nuevo usuario</div>
 
                     <form method="POST" action="{{ url('/usuarios/create') }}">
                         @csrf
@@ -60,8 +60,19 @@
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
                             </div>
                         </div>
+                        <div class="form-group row">
+                          <label for="inputState" class="col-md-4 col-form-label text-md-right">Rol</label>
+                          <div class="col-md-6">
+                            <select id="inputState" class="form-control" name="rol">
+                              <option value="2" selected>Usuario</option>
+                              <option value="1">Administrador</option>
 
-                        <div class="form-group row mb-0 text-center">
+                            </select>
+                          </div>
+
+                        </div>
+
+                        <div class="form-group row mb-0">
                           <div class="col-md-6 offset-md-4">
                               <a href="/home" class="btn btn-info">
                                   Regresar

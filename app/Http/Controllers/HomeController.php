@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 use App\User;
+use App\Role;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -37,24 +39,37 @@ class HomeController extends Controller
     }
     public function store(Request $req)
     {
-      $users = User::all();
-      $array = (array) $req;
-      return view('home',compact('users'));
-      User::create([
-          'name' => $array['name'],
-          'email' => $array['email'],
-          'password' => Hash::make($array['password']),
+
+      //$array = (array) $req;
+      $user = User::create([
+          'name' => $req->input('name'),
+          'email' => $req->input('email'),
+          'password' => bcrypt($req->input('password')),
       ]);
 
+      if($req->input('rol')=="1"){
+        $user
+            ->roles()
+            ->attach(Role::where('name', 'admin')->first());
+      }else{
+        $user
+            ->roles()
+            ->attach(Role::where('name', 'user')->first());
+      }
+        $users = User::all();
         return view('home',compact('users'));
 
     }
 
-    public function preEdit($id)
-    {
+    public function preEdit($id){
 
         $user = User::where('id',$id)->first();
-        return view('usuarios\edit', compact('user'));
+
+        $rol = DB::select("SELECT role_id FROM role_user WHERE user_id = $id");//Conseguir id del rol actual
+        $idRol = (array) $rol[0];
+        $idRolS = $idRol['role_id'];
+        //print_r($idRol['role_id']);
+        return view('usuarios\edit', compact('user','idRolS'));//activar vista de edicion y envio de arreglo de datos del usuario y id del rol
     }
 
     public function edit(Request $request, $id)
@@ -69,7 +84,21 @@ class HomeController extends Controller
       if(($request->input('password'))!=""){
         $user->password=Hash::make($request->input('password'));
       }
+
+
+
       $user->save();
+      DB::delete("DELETE FROM role_user WHERE user_id = $id");//eliminacion de los anteriores roles del usuario
+      if($request->input('rol')=="1"){
+
+        $user
+            ->roles()
+            ->attach(Role::where('name', 'admin')->first());
+      }else{
+        $user
+            ->roles()
+            ->attach(Role::where('name', 'user')->first());
+      }
       $users = User::all();
       return view('home', compact('users'));
 
@@ -79,6 +108,7 @@ class HomeController extends Controller
     {
 
       User::destroy($id);
+      DB::delete("DELETE FROM role_user WHERE user_id = $id");//eliminacion de los roles del usuario a eliminar
       $users = User::all();
       return view('home', compact('users'));
     }
